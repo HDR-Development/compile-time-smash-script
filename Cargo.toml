@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = ["json-script","json-script-macro"]
