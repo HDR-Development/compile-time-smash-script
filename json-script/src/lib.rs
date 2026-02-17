@@ -1,5 +1,5 @@
 // use json_script::{BASE_ARTICLE_HITBOX, BASE_HITBOX};
-use json_script_macro::*;
+// use json_script_macro::*;
 use smash::{lib::L2CValue, phx::Hash40};
 
 bitflags::bitflags! {
@@ -251,36 +251,44 @@ pub enum LrCheck {
     Right = 8,
 }
 
-hitbox_templates! {
-    pub BASE_HITBOX = {
-        fkb: 0,
-        hitlag: 1,
-        sdi: 1,
-        clank: SetOff::On,
-        facing: LrCheck::Pos,
-        set_weight: false,
-        shield_damage: ShieldDamage::Normal(0.0),
-        trip: 0,
-        rehit: 0,
-        reflectable: false,
-        absorbable: false,
-        flinchless: false,
-        disable_hitlag: false,
-        direct: true,
-        friendly_fire: false,
-        ground_air: CollisionSituation::GA,
-        hitbits: CollisionCategory::all(),
-        collision_part: CollisionPart::all(),
-        effect: "collision_attr_normal",
-    };
+// hitbox_templates! {
+//     pub BASE_HITBOX = {
+//         fkb: 0,
+//         hitlag: 1,
+//         sdi: 1,
+//         clank: SetOff::On,
+//         facing: LrCheck::Pos,
+//         set_weight: false,
+//         shield_damage: ShieldDamage::Normal(0.0),
+//         trip: 0,
+//         rehit: 0,
+//         reflectable: false,
+//         absorbable: false,
+//         flinchless: false,
+//         disable_hitlag: false,
+//         direct: true,
+//         friendly_fire: false,
+//         ground_air: CollisionSituation::GA,
+//         hitbits: CollisionCategory::all(),
+//         collision_part: CollisionPart::all(),
+//         effect: "collision_attr_normal",
+//     };
 
-    pub BAYONETTA_KICK = {
-        extends: BASE_HITBOX,
-        sfx_level: AttackSoundLevel::M,
-        collision_sound: CollisionSoundAttr::Kick,
-        region: AttackRegion::Kick,
-    };
-}
+//     pub BAYONETTA_KICK = {
+//         extends: BASE_HITBOX,
+//         sfx_level: AttackSoundLevel::M,
+//         collision_sound: CollisionSoundAttr::Kick,
+//         region: AttackRegion::Kick,
+//     };
+// }
+
+// fn acmd(agent: &mut smash::lua2cpp::L2CAgentBase) {
+//     const HITBOX_0: HitboxData = decl_hitbox! {
+//         extends: BAYONETTA_KICK, id: 0, part: 0, bone: "hip", dmg: 8, angle: 48, kbg: 103, bkb: 35, size: 4.3, x: -2.6, y: 0, z: 0
+//     };
+//     hitbox!(agent, {extends: BAYONETTA_KICK, id: 0, part: 0, bone: "hip", dmg: 8, angle: 48, kbg: 103, bkb: 35, size: 4.3, x: -2.6, y: 0, z: 0});
+//     create_hitbox(agent, &HITBOX_0);
+// }
 
 #[derive(Copy, Clone)]
 pub struct HitboxTemplate {
