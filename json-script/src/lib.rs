@@ -44,7 +44,7 @@ pub enum ShieldDamage {
 
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
-pub enum SfxLevel {
+pub enum SoundLevel {
     S = 0,
     M = 1,
     L = 2,
@@ -53,7 +53,7 @@ pub enum SfxLevel {
 
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
-pub enum CollisionSoundAttr {
+pub enum CollisionSound {
     None = 0x0,
     Punch = 0x1,
     Kick = 0x2,
@@ -268,16 +268,16 @@ pub enum LrCheck {
 //         disable_hitlag: false,
 //         direct: true,
 //         friendly_fire: false,
-//         ground_air: CollisionSituation::GA,
-//         hitbits: CollisionCategory::all(),
-//         collision_part: CollisionPart::all(),
+//         situation: CollisionSituation::GA,
+//         category: CollisionCategory::all(),
+//         hit_part: CollisionPart::all(),
 //         effect: "collision_attr_normal",
 //     };
 
 //     pub BAYONETTA_KICK = {
 //         extends: BASE_HITBOX,
-//         sfx_level: SfxLevel::M,
-//         collision_sound: CollisionSoundAttr::Kick,
+//         sound_level: SoundLevel::M,
+//         hit_sound: CollisionSound::Kick,
 //         region: AttackRegion::Kick,
 //     };
 // }
@@ -320,13 +320,13 @@ pub struct HitboxTemplate {
     pub flinchless: Option<bool>,
     pub disable_hitlag: Option<bool>,
     pub direct: Option<bool>,
-    pub ground_air: Option<CollisionSituation>,
-    pub hitbits: Option<CollisionCategory>,
-    pub collision_part: Option<CollisionPart>,
+    pub situation: Option<CollisionSituation>,
+    pub category: Option<CollisionCategory>,
+    pub hit_part: Option<CollisionPart>,
     pub friendly_fire: Option<bool>,
     pub effect: Option<Hash40>,
-    pub sfx_level: Option<SfxLevel>,
-    pub collision_sound: Option<CollisionSoundAttr>,
+    pub sound_level: Option<SoundLevel>,
+    pub hit_sound: Option<CollisionSound>,
     pub region: Option<AttackRegion>,
 }
 
@@ -361,13 +361,13 @@ impl HitboxTemplate {
             flinchless: None,
             disable_hitlag: None,
             direct: None,
-            ground_air: None,
-            hitbits: None,
-            collision_part: None,
+            situation: None,
+            category: None,
+            hit_part: None,
             friendly_fire: None,
             effect: None,
-            sfx_level: None,
-            collision_sound: None,
+            sound_level: None,
+            hit_sound: None,
             region: None,
         }
     }
@@ -403,13 +403,13 @@ pub struct HitboxData {
     pub flinchless: bool,
     pub disable_hitlag: bool,
     pub direct: bool,
-    pub ground_air: CollisionSituation,
-    pub hitbits: CollisionCategory,
-    pub collision_part: CollisionPart,
+    pub situation: CollisionSituation,
+    pub category: CollisionCategory,
+    pub hit_part: CollisionPart,
     pub friendly_fire: bool,
     pub effect: Hash40,
-    pub sfx_level: SfxLevel,
-    pub collision_sound: CollisionSoundAttr,
+    pub sound_level: SoundLevel,
+    pub hit_sound: CollisionSound,
     pub region: AttackRegion,
 }
 
@@ -453,13 +453,13 @@ impl HitboxData {
             flinchless: or_const_panic!(flinchless),
             disable_hitlag: or_const_panic!(disable_hitlag),
             direct: or_const_panic!(direct),
-            ground_air: or_const_panic!(ground_air),
-            hitbits: or_const_panic!(hitbits),
-            collision_part: or_const_panic!(collision_part),
+            situation: or_const_panic!(situation),
+            category: or_const_panic!(category),
+            hit_part: or_const_panic!(hit_part),
             friendly_fire: or_const_panic!(friendly_fire),
             effect: or_const_panic!(effect),
-            sfx_level: or_const_panic!(sfx_level),
-            collision_sound: or_const_panic!(collision_sound),
+            sound_level: or_const_panic!(sound_level),
+            hit_sound: or_const_panic!(hit_sound),
             region: or_const_panic!(region),
         }
     }
@@ -522,13 +522,13 @@ pub fn create_hitbox(agent: &mut smash::lua2cpp::L2CAgentBase, hitbox: &HitboxDa
         hitbox.flinchless,
         hitbox.disable_hitlag,
         hitbox.direct,
-        hitbox.ground_air.bits(),
-        hitbox.hitbits.bits(),
-        hitbox.collision_part.bits(),
+        hitbox.situation.bits(),
+        hitbox.category.bits(),
+        hitbox.hit_part.bits(),
         hitbox.friendly_fire,
         hitbox.effect,
-        hitbox.sfx_level as i32,
-        hitbox.collision_sound as i32,
+        hitbox.sound_level as i32,
+        hitbox.hit_sound as i32,
         hitbox.region as i32,
     );
     unsafe { smash::app::sv_animcmd::ATTACK(agent.lua_state_agent) }
