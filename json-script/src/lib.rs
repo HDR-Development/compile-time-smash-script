@@ -282,16 +282,6 @@ hitbox_templates! {
     };
 }
 
-fn acmd(agent: &mut smash::lua2cpp::L2CAgentBase) {
-    const HITBOX_0: HitboxData = decl_hitbox! {
-        extends: BAYONETTA_KICK, id: 0, part: 0, bone: "hip", dmg: 8, angle: 48, kbg: 103, bkb: 35, size: 4.3, x: -2.6, y: 0, z: 0
-    };
-
-    hitbox!(agent, {extends: BAYONETTA_KICK, id: 0, part: 0, bone: "hip", dmg: 8, angle: 48, kbg: 103, bkb: 35, size: 4.3, x: -2.6, y: 0, z: 0});
-
-    create_hitbox(agent, &HITBOX_0);
-}
-
 #[derive(Copy, Clone)]
 pub struct HitboxTemplate {
     pub id: Option<u64>,

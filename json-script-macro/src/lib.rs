@@ -94,13 +94,13 @@ fn make_hitbox_template(fields: CommaDelimitedVec<TemplateField>) -> proc_macro2
         .to_tokens(&mut group_stream);
     } else {
         quote::quote! {
-            ..crate::HitboxTemplate::new()
+            ..::json_script::HitboxTemplate::new()
         }
         .to_tokens(&mut group_stream);
     }
 
     quote::quote! {
-        crate::HitboxTemplate {
+        ::json_script::HitboxTemplate {
             #group_stream
         }
     }
@@ -140,7 +140,7 @@ pub fn hitbox_templates(input: TokenStream) -> TokenStream {
 
         template.value.visibility.to_tokens(&mut output_stream);
         quote::quote! {
-            const #name: crate::HitboxTemplate = #generated;
+            const #name: ::json_script::HitboxTemplate = #generated;
         }
         .to_tokens(&mut output_stream);
     }
@@ -178,7 +178,7 @@ pub fn decl_hitbox(input: TokenStream) -> TokenStream {
     let template = make_hitbox_template(content);
 
     quote::quote! {
-        crate::HitboxData::from_template_or_panic(#template)
+        ::json_script::HitboxData::from_template_or_panic(#template)
     }
     .into()
 }
@@ -214,7 +214,7 @@ pub fn hitbox(input: TokenStream) -> TokenStream {
     let template = make_hitbox_template(content.group.content);
 
     quote::quote! {
-        crate::create_hitbox(#agent, &crate::HitboxData::from_template_or_panic(#template))
+        ::json_script::create_hitbox(#agent, &::json_script::HitboxData::from_template_or_panic(#template))
     }
     .into()
 }
