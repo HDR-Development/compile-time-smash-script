@@ -14,8 +14,8 @@ bitflags::bitflags! {
 
     #[derive(Debug, Copy, Clone)]
     pub struct CollisionSituation : u32 {
-        const GROUND = 1 << 0;
-        const AIR = 1 << 1;
+        const G = 1 << 0;
+        const A = 1 << 1;
         const ODD = 1 << 2;
         const IGNORE_DOWN = 1 << 31;
 
@@ -38,13 +38,13 @@ bitflags::bitflags! {
 
 #[derive(Debug, Copy, Clone)]
 pub enum ShieldDamage {
-    Normal(f32),
+    Add(f32),
     Transcendent,
 }
 
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
-pub enum AttackSoundLevel {
+pub enum SfxLevel {
     S = 0,
     M = 1,
     L = 2,
@@ -243,8 +243,8 @@ pub enum LrCheck {
     Pos = 0,
     Speed = 1,
     Lr = 2,
-    Forward = 3,
-    Backward = 4,
+    F = 3,
+    B = 4,
     Part = 5,
     BackSlash = 6,
     Left = 7,
@@ -259,7 +259,7 @@ pub enum LrCheck {
 //         clank: SetOff::On,
 //         facing: LrCheck::Pos,
 //         set_weight: false,
-//         shield_damage: ShieldDamage::Normal(0.0),
+//         shield_dmg: ShieldDamage::Add(0.0),
 //         trip: 0,
 //         rehit: 0,
 //         reflectable: false,
@@ -276,7 +276,7 @@ pub enum LrCheck {
 
 //     pub BAYONETTA_KICK = {
 //         extends: BASE_HITBOX,
-//         sfx_level: AttackSoundLevel::M,
+//         sfx_level: SfxLevel::M,
 //         collision_sound: CollisionSoundAttr::Kick,
 //         region: AttackRegion::Kick,
 //     };
@@ -312,7 +312,7 @@ pub struct HitboxTemplate {
     pub clank: Option<SetOff>,
     pub facing: Option<LrCheck>,
     pub set_weight: Option<bool>,
-    pub shield_damage: Option<ShieldDamage>,
+    pub shield_dmg: Option<ShieldDamage>,
     pub trip: Option<f32>,
     pub rehit: Option<i32>,
     pub reflectable: Option<bool>,
@@ -325,7 +325,7 @@ pub struct HitboxTemplate {
     pub collision_part: Option<CollisionPart>,
     pub friendly_fire: Option<bool>,
     pub effect: Option<Hash40>,
-    pub sfx_level: Option<AttackSoundLevel>,
+    pub sfx_level: Option<SfxLevel>,
     pub collision_sound: Option<CollisionSoundAttr>,
     pub region: Option<AttackRegion>,
 }
@@ -353,7 +353,7 @@ impl HitboxTemplate {
             clank: None,
             facing: None,
             set_weight: None,
-            shield_damage: None,
+            shield_dmg: None,
             trip: None,
             rehit: None,
             reflectable: None,
@@ -395,7 +395,7 @@ pub struct HitboxData {
     pub clank: SetOff,
     pub facing: LrCheck,
     pub set_weight: bool,
-    pub shield_damage: ShieldDamage,
+    pub shield_dmg: ShieldDamage,
     pub trip: f32,
     pub rehit: i32,
     pub reflectable: bool,
@@ -408,7 +408,7 @@ pub struct HitboxData {
     pub collision_part: CollisionPart,
     pub friendly_fire: bool,
     pub effect: Hash40,
-    pub sfx_level: AttackSoundLevel,
+    pub sfx_level: SfxLevel,
     pub collision_sound: CollisionSoundAttr,
     pub region: AttackRegion,
 }
@@ -445,7 +445,7 @@ impl HitboxData {
             clank: or_const_panic!(clank),
             facing: or_const_panic!(facing),
             set_weight: or_const_panic!(set_weight),
-            shield_damage: or_const_panic!(shield_damage),
+            shield_dmg: or_const_panic!(shield_dmg),
             trip: or_const_panic!(trip),
             rehit: or_const_panic!(rehit),
             reflectable: or_const_panic!(reflectable),
@@ -511,8 +511,8 @@ pub fn create_hitbox(agent: &mut smash::lua2cpp::L2CAgentBase, hitbox: &HitboxDa
         hitbox.clank as i32,
         hitbox.facing as i32,
         hitbox.set_weight,
-        match hitbox.shield_damage {
-            ShieldDamage::Normal(normal) => L2CValue::F32(normal),
+        match hitbox.shield_dmg {
+            ShieldDamage::Add(normal) => L2CValue::F32(normal),
             ShieldDamage::Transcendent => L2CValue::Hash40s("no"),
         },
         hitbox.trip,
