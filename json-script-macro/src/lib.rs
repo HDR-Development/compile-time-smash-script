@@ -178,7 +178,7 @@ pub fn decl_hitbox(input: TokenStream) -> TokenStream {
     let template = make_hitbox_template(content);
 
     quote::quote! {
-        ::json_script::HitboxData::from_template_or_panic(#template)
+        const { ::json_script::HitboxData::from_template_or_panic(#template) }
     }
     .into()
 }
@@ -214,7 +214,7 @@ pub fn hitbox(input: TokenStream) -> TokenStream {
     let template = make_hitbox_template(content.group.content);
 
     quote::quote! {
-        ::json_script::create_hitbox(#agent, &::json_script::HitboxData::from_template_or_panic(#template))
+        ::json_script::create_hitbox(#agent, &(const { ::json_script::HitboxData::from_template_or_panic(#template) }))
     }
     .into()
 }
