@@ -39,7 +39,7 @@ bitflags::bitflags! {
 #[derive(Debug, Copy, Clone)]
 pub enum ShieldDamage {
     Add(f32),
-    Transcendent,
+    Unblockable,
 }
 
 #[repr(i32)]
@@ -513,7 +513,7 @@ pub fn create_hitbox(agent: &mut smash::lua2cpp::L2CAgentBase, hitbox: &HitboxDa
         hitbox.set_weight,
         match hitbox.shield_dmg {
             ShieldDamage::Add(normal) => L2CValue::F32(normal),
-            ShieldDamage::Transcendent => L2CValue::Hash40s("no"),
+            ShieldDamage::Unblockable => L2CValue::Hash40s("no"),
         },
         hitbox.trip,
         hitbox.rehit,
