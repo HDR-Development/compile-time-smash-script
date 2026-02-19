@@ -20,16 +20,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "json-script"
+name = "proc-hitbox"
 version = "0.1.0"
 dependencies = [
  "bitflags",
- "json-script-macro",
+ "proc-hitbox-macro",
  "skyline_smash",
 ]
 
 [[package]]
-name = "json-script-macro"
+name = "proc-hitbox-macro"
 version = "0.1.0"
 dependencies = [
  "proc-macro2",
