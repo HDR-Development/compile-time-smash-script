@@ -1,5 +1,5 @@
-// use json_script::{BASE_ARTICLE_HITBOX, BASE_HITBOX};
-// use json_script_macro::*;
+// use proc_hitbox::{BASE_ARTICLE_HITBOX, BASE_HITBOX};
+// use proc_hitbox_macro::*;
 use smash::{lib::L2CValue, phx::Hash40};
 
 bitflags::bitflags! {
