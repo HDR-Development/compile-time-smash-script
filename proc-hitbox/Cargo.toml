@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 proc-hitbox-macro = { path = "../proc-hitbox-macro" }
-skyline_smash = { git = "https://github.com/HDR-Development/skyline-smash", features = ["weak_l2cvalue"] }
+skyline_smash = { git = "https://github.com/ultimate-research/skyline-smash", features = ["weak_l2cvalue"] }
 bitflags = "2"
